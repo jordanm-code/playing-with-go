@@ -16,4 +16,3 @@ RUN \
 
 # Add Go to our Path
 ENV PATH $PATH:/usr/local/go/bin
-
