@@ -1,0 +1,12 @@
+---
+version: "3.5"
+services:
+
+  # Start the Go Service
+  go:
+    image: go-service:latest
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+    entrypoint: /app/docker/entrypoint-go.sh
