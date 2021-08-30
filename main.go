@@ -1,8 +1,32 @@
 package main
 
-import "fmt"
+import (
+  "fmt"
+  "log"
+  "net/http"
+  "encoding/json"
+)
 
 func main() {
-  fmt.Println("Test file for docker.")
-  fmt.Println("If this works, yay. I have something as a base for now.")
+  fmt.Println("Starting up HTTP...")
+
+  xchgURL := "https://api.exchangerate.host/latest"
+
+  client := &http.Client{
+    CheckRedirect: func(req *http.Request, via []*http.Request) error {
+      return http.ErrUseLastResponse
+    },
+  }
+
+  resp, err := client.Get(xchgURL)
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  if resp.StatusCode == http.StatusOK {
+    var result map[string]interface{}
+
+    json.NewDecoder(resp.Body).Decode(&result)
+    fmt.Println(result["rates"])
+  }
 }
