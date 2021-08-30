@@ -1,4 +1,4 @@
-FROM ubuntu:21.10
+FROM ubuntu:20.04
 
 # Set ENVs for our GO Project to Read
 ENV GOLANG_VERION 1.16.6
