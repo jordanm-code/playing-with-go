@@ -12,7 +12,11 @@ func main() {
 
   xchgURL := "https://api.exchangerate.host/latest"
 
-  client := &http.Client{}
+  client := &http.Client{
+    CheckRedirect: func(req *http.Request, via []*http.Request) error {
+      return http.ErrUseLastResponse
+    },
+  }
 
   resp, err := client.Get(xchgURL)
   if err != nil {
@@ -21,13 +25,6 @@ func main() {
 
   if resp.StatusCode == http.StatusOK {
     var result map[string]interface{}
-
-    fmt.Println("Response:")
-    fmt.Println(resp)
-
-    fmt.Println("Body")
-    fmt.Println(resp.Header)
-    fmt.Println(resp.Body)
 
     json.NewDecoder(resp.Body).Decode(&result)
     fmt.Println(result["rates"])
