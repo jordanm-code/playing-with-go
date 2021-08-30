@@ -4,7 +4,7 @@ services:
 
   # Start the Go Service
   go:
-    image: go-service:latest
+    build: .
     volumes:
       - type: bind
         source: ./
